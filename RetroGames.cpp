@@ -23,37 +23,43 @@ bool check_game_installed(string game)
 
 int main()
 {
-    cout << "Retro Games Client v1.0.0" << endl;
+    cout << "Retro Games Client v1.1.0" << endl;
     // get list of installed games
-    string installed_games[2];
+    string installed_games[3];
     bool snake = check_game_installed("SnakeGame");
     bool dodger = check_game_installed("DodgerGame");
+    bool tictactoe = check_game_installed("TicTacToe");
 
     // check if any games are installed
-    if (snake && dodger)
+    if (snake)
     {
         installed_games[0] = "SnakeGame";
-        installed_games[1] = "DodgerGame";
-    }
-    else if (snake && !dodger)
-    {
-        installed_games[0] = "SnakeGame";
-        installed_games[1] = "";
-    }
-    else if (!snake && dodger)
-    {
-        installed_games[0] = "";
-        installed_games[1] = "DodgerGame";
     }
     else
     {
         installed_games[0] = "";
+    }
+    if (dodger)
+    {
+        installed_games[1] = "DodgerGame";
+    }
+    else
+    {
         installed_games[1] = "";
+    }
+    if (tictactoe)
+    {
+        installed_games[2] = "TicTacToe";
+    }
+    else
+    {
+        installed_games[2] = "";
     }
 
     cout << "Installed Games: \n"
          << "- " << installed_games[0] << endl
-         << "- " << installed_games[1] << endl;
+         << "- " << installed_games[1] << endl
+         << "- " << installed_games[2] << endl;
 
     // user interfacing
     string options = "1 - Play Game\n2 - Install Game\n3 - Uninstall Game\n4 - Refresh installed list\n5 - Exit";
@@ -69,7 +75,7 @@ int main()
         switch (choice)
         {
         case 1:
-            if (installed_games[0] == "" && installed_games[1] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -77,7 +83,8 @@ int main()
             {
                 cout << "Your game slots: \n"
                      << "1 - " << installed_games[0] << endl
-                     << "2 - " << installed_games[1] << endl;
+                     << "2 - " << installed_games[1] << endl
+                     << "3 - " << installed_games[2] << endl;
                 cout << "Enter game number: ";
                 int game_choice;
                 cin >> game_choice;
@@ -94,6 +101,10 @@ int main()
                 {
                     system("python ./DodgerGame/dodger.py");
                 }
+                else if (game_choice == 3 && installed_games[2] != "")
+                {
+                    system("start TicTacToe/TicTacToe-vs-AI.exe");
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -103,9 +114,10 @@ int main()
         case 2:
             cout << "Your game slots: \n"
                  << "1 - " << installed_games[0] << endl
-                 << "2 - " << installed_games[1] << endl;
+                 << "2 - " << installed_games[1] << endl
+                 << "3 - " << installed_games[2] << endl;
             cout << "Enter game to install: ";
-            cout << "\n1 - SnakeGame\n2 - DodgerGame" << endl;
+            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe" << endl;
             int slot_choice;
             cin >> slot_choice;
             if (slot_choice == 1)
@@ -136,13 +148,25 @@ int main()
                     cout << "Game slot 2 is already occupied" << endl;
                 }
             }
+            else if (slot_choice == 3)
+            {
+                if (installed_games[2] == "")
+                {
+                    system("git clone https://github.com/AviationSFO/TicTacToe.git");
+                }
+                else
+                {
+                    cout << "Game slot 3 is already occupied" << endl;
+                }
+            }
             else
             {
                 cout << "Invalid game choice" << endl;
             }
+            
             break;
         case 3:
-            if (installed_games[0] == "" && installed_games[1] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -150,7 +174,8 @@ int main()
             {
                 cout << "Installed Games: \n"
                      << installed_games[0] << endl
-                     << installed_games[1] << endl;
+                     << installed_games[1] << endl
+                     << installed_games[2] << endl;
                 cout << "Enter slot game to uninstall: ";
                 if (snake)
                 {
@@ -159,6 +184,10 @@ int main()
                 if (dodger)
                 {
                     cout << "2 - DodgerGame" << endl;
+                }
+                if (tictactoe)
+                {
+                    cout << "3 - TicTacToe" << endl;
                 }
                 int uninstall_choice;
                 cin >> uninstall_choice;
@@ -176,6 +205,13 @@ int main()
                          << endl
                          << "Restart client for changes to take effect" << endl;
                 }
+                else if (uninstall_choice == 3 && tictactoe)
+                {
+                    system("rmdir /s TicTacToe");
+                    cout << endl
+                         << endl
+                         << "Restart client for changes to take effect" << endl;
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -185,25 +221,30 @@ int main()
         case 4:
             snake = check_game_installed("SnakeGame");
             dodger = check_game_installed("DodgerGame");
-            if (snake && dodger)
+            tictactoe = check_game_installed("TicTacToe");
+            if (snake)
             {
                 installed_games[0] = "SnakeGame";
-                installed_games[1] = "DodgerGame";
-            }
-            else if (snake && !dodger)
-            {
-                installed_games[0] = "SnakeGame";
-                installed_games[1] = "";
-            }
-            else if (!snake && dodger)
-            {
-                installed_games[0] = "";
-                installed_games[1] = "DodgerGame";
             }
             else
             {
                 installed_games[0] = "";
+            }
+            if (dodger)
+            {
+                installed_games[1] = "DodgerGame";
+            }
+            else
+            {
                 installed_games[1] = "";
+            }
+            if (tictactoe)
+            {
+                installed_games[2] = "TicTacToe";
+            }
+            else
+            {
+                installed_games[2] = "";
             }
             break;
         case 5:
