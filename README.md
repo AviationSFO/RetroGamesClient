@@ -3,6 +3,7 @@ This is a simple command line client for retro python games I have made. It is w
 ## Current Supported Games
 * [Snake](https://github.com/AviationSFO/SnakeGame)
 * [Dodger](https://github.com/AviationSFO/DodgerGame)
+* [TicTacToe](https://github.com/AviationSFO/TicTacToe)
 
 ## Usage
 ### Windows 10/11
