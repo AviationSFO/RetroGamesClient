@@ -26,7 +26,7 @@ bool check_game_installed(string game)
 int main()
 {
     using namespace std::this_thread; // sleep_for, sleep_until
-    using namespace std::chrono; // nanoseconds, system_clock, seconds
+    using namespace std::chrono;      // nanoseconds, system_clock, seconds
     cout << "Retro Games Client v1.3.0" << endl;
     // get list of installed games
     string installed_games[5];
