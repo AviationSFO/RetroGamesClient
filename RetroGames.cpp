@@ -23,12 +23,13 @@ bool check_game_installed(string game)
 
 int main()
 {
-    cout << "Retro Games Client v1.1.0" << endl;
+    cout << "Retro Games Client v1.2.0" << endl;
     // get list of installed games
-    string installed_games[3];
+    string installed_games[4];
     bool snake = check_game_installed("SnakeGame");
     bool dodger = check_game_installed("DodgerGame");
     bool tictactoe = check_game_installed("TicTacToe");
+    bool wordle = check_game_installed("wordle");
 
     // check if any games are installed
     if (snake)
@@ -55,11 +56,20 @@ int main()
     {
         installed_games[2] = "";
     }
+    if (wordle)
+    {
+        installed_games[3] = "wordle";
+    }
+    else
+    {
+        installed_games[3] = "";
+    }
 
     cout << "Installed Games: \n"
          << "- " << installed_games[0] << endl
          << "- " << installed_games[1] << endl
-         << "- " << installed_games[2] << endl;
+         << "- " << installed_games[2] << endl
+         << "- " << installed_games[3] << endl;
 
     // user interfacing
     string options = "1 - Play Game\n2 - Install Game\n3 - Uninstall Game\n4 - Refresh installed list\n5 - Exit";
@@ -75,7 +85,7 @@ int main()
         switch (choice)
         {
         case 1:
-            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -84,7 +94,8 @@ int main()
                 cout << "Your game slots: \n"
                      << "1 - " << installed_games[0] << endl
                      << "2 - " << installed_games[1] << endl
-                     << "3 - " << installed_games[2] << endl;
+                     << "3 - " << installed_games[2] << endl
+                     << "4 - " << installed_games[3] << endl;
                 cout << "Enter game number: ";
                 int game_choice;
                 cin >> game_choice;
@@ -105,6 +116,10 @@ int main()
                 {
                     system("start TicTacToe/TicTacToe-vs-AI.exe");
                 }
+                else if (game_choice == 4 && installed_games[3] != "")
+                {
+                    system("lua ./wordle/main.lua");
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -115,9 +130,10 @@ int main()
             cout << "Your game slots: \n"
                  << "1 - " << installed_games[0] << endl
                  << "2 - " << installed_games[1] << endl
-                 << "3 - " << installed_games[2] << endl;
+                 << "3 - " << installed_games[2] << endl
+                 << "4 - " << installed_games[3] << endl;
             cout << "Enter game to install: ";
-            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe" << endl;
+            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe\n4 - Wordle" << endl;
             int slot_choice;
             cin >> slot_choice;
             if (slot_choice == 1)
@@ -159,6 +175,13 @@ int main()
                     cout << "Game slot 3 is already occupied" << endl;
                 }
             }
+            else if (slot_choice == 4)
+            {
+                if (installed_games[3] == "")
+                {
+                    system("git clone -b client-use https://github.com/AviationSFO/wordle");
+                }
+            }
             else
             {
                 cout << "Invalid game choice" << endl;
@@ -166,7 +189,7 @@ int main()
             
             break;
         case 3:
-            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -175,8 +198,9 @@ int main()
                 cout << "Installed Games: \n"
                      << installed_games[0] << endl
                      << installed_games[1] << endl
-                     << installed_games[2] << endl;
-                cout << "Enter slot game to uninstall: ";
+                     << installed_games[2] << endl
+                     << installed_games[3] << endl;
+                cout << "Enter slot game to uninstall: " << endl;
                 if (snake)
                 {
                     cout << "1 - SnakeGame" << endl;
@@ -188,6 +212,10 @@ int main()
                 if (tictactoe)
                 {
                     cout << "3 - TicTacToe" << endl;
+                }
+                if (wordle)
+                {
+                    cout << "4 - Wordle" << endl;
                 }
                 int uninstall_choice;
                 cin >> uninstall_choice;
@@ -212,6 +240,13 @@ int main()
                          << endl
                          << "Restart client for changes to take effect" << endl;
                 }
+                else if (uninstall_choice == 4 && wordle)
+                {
+                    system("rmdir /s wordle");
+                    cout << endl
+                         << endl
+                         << "Restart client for changes to take effect" << endl;
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -222,6 +257,7 @@ int main()
             snake = check_game_installed("SnakeGame");
             dodger = check_game_installed("DodgerGame");
             tictactoe = check_game_installed("TicTacToe");
+            wordle = check_game_installed("wordle");
             if (snake)
             {
                 installed_games[0] = "SnakeGame";
@@ -245,6 +281,14 @@ int main()
             else
             {
                 installed_games[2] = "";
+            }
+            if (wordle)
+            {
+                installed_games[3] = "Wordle";
+            }
+            else
+            {
+                installed_games[3] = "";
             }
             break;
         case 5:
