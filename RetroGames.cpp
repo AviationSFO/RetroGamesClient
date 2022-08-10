@@ -3,6 +3,8 @@
 #include <filesystem>
 #include <cstring>
 #include <fstream>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 using filesystem::current_path;
@@ -23,13 +25,16 @@ bool check_game_installed(string game)
 
 int main()
 {
+    using namespace std::this_thread; // sleep_for, sleep_until
+    using namespace std::chrono; // nanoseconds, system_clock, seconds
     cout << "Retro Games Client v1.2.0" << endl;
     // get list of installed games
-    string installed_games[4];
+    string installed_games[5];
     bool snake = check_game_installed("SnakeGame");
     bool dodger = check_game_installed("DodgerGame");
     bool tictactoe = check_game_installed("TicTacToe");
     bool wordle = check_game_installed("wordle");
+    bool platformer = check_game_installed("Platformer2000");
 
     // check if any games are installed
     if (snake)
@@ -64,12 +69,21 @@ int main()
     {
         installed_games[3] = "";
     }
+    if (platformer)
+    {
+        installed_games[4] = "Platformer2000";
+    }
+    else
+    {
+        installed_games[4] = "";
+    }
 
     cout << "Installed Games: \n"
          << "- " << installed_games[0] << endl
          << "- " << installed_games[1] << endl
          << "- " << installed_games[2] << endl
-         << "- " << installed_games[3] << endl;
+         << "- " << installed_games[3] << endl
+         << "- " << installed_games[4] << endl;
 
     // user interfacing
     string options = "1 - Play Game\n2 - Install Game\n3 - Uninstall Game\n4 - Refresh installed list\n5 - Exit";
@@ -85,7 +99,7 @@ int main()
         switch (choice)
         {
         case 1:
-            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "" && installed_games[4] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -95,7 +109,8 @@ int main()
                      << "1 - " << installed_games[0] << endl
                      << "2 - " << installed_games[1] << endl
                      << "3 - " << installed_games[2] << endl
-                     << "4 - " << installed_games[3] << endl;
+                     << "4 - " << installed_games[3] << endl
+                     << "5 - " << installed_games[4] << endl;
                 cout << "Enter game number: ";
                 int game_choice;
                 cin >> game_choice;
@@ -120,6 +135,10 @@ int main()
                 {
                     system("lua ./wordle/main.lua");
                 }
+                else if (game_choice == 5 && installed_games[4] != "")
+                {
+                    system("start Platformer2000/Hello-Unity.exe");
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -131,9 +150,10 @@ int main()
                  << "1 - " << installed_games[0] << endl
                  << "2 - " << installed_games[1] << endl
                  << "3 - " << installed_games[2] << endl
-                 << "4 - " << installed_games[3] << endl;
+                 << "4 - " << installed_games[3] << endl
+                 << "5 - " << installed_games[4] << endl;
             cout << "Enter game to install: ";
-            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe\n4 - Wordle" << endl;
+            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe\n4 - Wordle\n5 - Platformer 2000" << endl;
             int slot_choice;
             cin >> slot_choice;
             if (slot_choice == 1)
@@ -192,6 +212,13 @@ int main()
                     cout << "Game slot 4 is already occupied" << endl;
                 }
             }
+            else if (slot_choice == 5)
+            {
+                if (installed_games[4] == "")
+                {
+                    system("powershell -ExecutionPolicy Bypass -F installP2K.ps1");
+                }
+            }
             else
             {
                 cout << "Invalid game choice" << endl;
@@ -199,7 +226,7 @@ int main()
 
             break;
         case 3:
-            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "")
+            if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "" && installed_games[4] == "")
             {
                 cout << "You have no installed games." << endl;
             }
@@ -209,7 +236,8 @@ int main()
                      << installed_games[0] << endl
                      << installed_games[1] << endl
                      << installed_games[2] << endl
-                     << installed_games[3] << endl;
+                     << installed_games[3] << endl
+                     << installed_games[4] << endl;
                 cout << "Enter slot game to uninstall: " << endl;
                 if (snake)
                 {
@@ -226,6 +254,10 @@ int main()
                 if (wordle)
                 {
                     cout << "4 - Wordle" << endl;
+                }
+                if (platformer)
+                {
+                    cout << "5 - Platformer 2000" << endl;
                 }
                 int uninstall_choice;
                 cin >> uninstall_choice;
@@ -257,6 +289,13 @@ int main()
                          << endl
                          << "Restart client for changes to take effect" << endl;
                 }
+                else if (uninstall_choice == 5 && platformer)
+                {
+                    system("rmdir /s Platformer2000");
+                    cout << endl
+                         << endl
+                         << "Restart client for changes to take effect" << endl;
+                }
                 else
                 {
                     cout << "Invalid game choice" << endl;
@@ -268,6 +307,7 @@ int main()
             dodger = check_game_installed("DodgerGame");
             tictactoe = check_game_installed("TicTacToe");
             wordle = check_game_installed("wordle");
+            platformer = check_game_installed("Platformer2000");
             if (snake)
             {
                 installed_games[0] = "SnakeGame";
@@ -299,6 +339,14 @@ int main()
             else
             {
                 installed_games[3] = "";
+            }
+            if (platformer)
+            {
+                installed_games[4] = "Platformer2000";
+            }
+            else
+            {
+                installed_games[4] = "";
             }
             break;
         case 5:
