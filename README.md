@@ -1,9 +1,19 @@
 # Retro Games Client
-This is a simple command line client for retro python games I have made. It is written in C++ and designed to be lightweight and easy to use for a CLI app.
+This is a simple command line client for retro games I have made. It is written in C++ and designed to be lightweight and easy to use for a CLI app.
 ## Current Supported Games
-* [Snake](https://github.com/AviationSFO/SnakeGame)
-* [Dodger](https://github.com/AviationSFO/DodgerGame)
-* [TicTacToe](https://github.com/AviationSFO/TicTacToe)
+* [Snake](https://github.com/AviationSFO/SnakeGame) (Python)
+  * #### Requirements
+    * pygame
+* [Dodger](https://github.com/AviationSFO/DodgerGame) 
+(Python)
+  * #### Requirements
+    * pygame
+* [TicTacToe](https://github.com/AviationSFO/TicTacToe) (C++)
+  * #### Requirements
+    * Currently only for windows
+* [Wordle](https://github.com/AviationSFO/wordle) (Lua)
+  * #### Requirements
+    * Lua installed 5.4+
 
 ## Usage
 ### Windows 10/11
