@@ -140,6 +140,7 @@ int main()
             {
                 if (installed_games[0] == "")
                 {
+                    system("pip install pygame");
                     system("git clone https://github.com/AviationSFO/SnakeGame.git");
                     cout << endl
                          << endl
@@ -154,6 +155,7 @@ int main()
             {
                 if (installed_games[1] == "")
                 {
+                    system("pip install pygame");
                     system("git clone https://github.com/AviationSFO/DodgerGame.git");
                     cout << endl
                          << endl
@@ -180,13 +182,21 @@ int main()
                 if (installed_games[3] == "")
                 {
                     system("git clone -b client-use https://github.com/AviationSFO/wordle");
+                    cout << endl
+                         << endl
+                         << "WARNING: A Lua interpreter is required to run the game," << endl
+                         << "please install one if you do not already!" << endl;
+                }
+                else
+                {
+                    cout << "Game slot 4 is already occupied" << endl;
                 }
             }
             else
             {
                 cout << "Invalid game choice" << endl;
             }
-            
+
             break;
         case 3:
             if (installed_games[0] == "" && installed_games[1] == "" && installed_games[2] == "" && installed_games[3] == "")
