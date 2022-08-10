@@ -3,17 +3,22 @@ This is a simple command line client for retro games I have made. It is written 
 ## Current Supported Games
 * [Snake](https://github.com/AviationSFO/SnakeGame) (Python)
   * #### Requirements
-    * pygame
+    * pygame (auto installed)
 * [Dodger](https://github.com/AviationSFO/DodgerGame) 
 (Python)
   * #### Requirements
-    * pygame
+    * pygame (auto install)
 * [TicTacToe](https://github.com/AviationSFO/TicTacToe) (C++)
   * #### Requirements
     * Currently only for windows
 * [Wordle](https://github.com/AviationSFO/wordle) (Lua)
   * #### Requirements
     * Lua installed 5.4+
+* [Platformer2000](https://github.com/AviationSFO/Hello-Unity) (C#)
+  * #### Requirements
+    * python with pip
+    * gdown (auto install)
+    * Windows 10/11
 
 ## Usage
 ### Windows 10/11
