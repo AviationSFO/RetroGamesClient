@@ -27,9 +27,10 @@ int main()
 {
     using namespace std::this_thread; // sleep_for, sleep_until
     using namespace std::chrono;      // nanoseconds, system_clock, seconds
-    cout << "Retro Games Client v1.3.0" << endl;
+    cout << "Retro Games Client v1.3.1" << endl;
     // get list of installed games
     string installed_games[5];
+    string game_exec[5];
     bool snake = check_game_installed("SnakeGame");
     bool dodger = check_game_installed("DodgerGame");
     bool tictactoe = check_game_installed("TicTacToe");
@@ -40,6 +41,7 @@ int main()
     if (snake)
     {
         installed_games[0] = "SnakeGame";
+        game_exec[0] = "python ./SnakeGame/turtlesnake.py";
     }
     else
     {
@@ -48,6 +50,7 @@ int main()
     if (dodger)
     {
         installed_games[1] = "DodgerGame";
+        game_exec[1] = "python ./DodgerGame/dodger.py";
     }
     else
     {
@@ -56,6 +59,7 @@ int main()
     if (tictactoe)
     {
         installed_games[2] = "TicTacToe";
+        game_exec[2] = "start ./TicTacToe/TicTacToe-vs-AI.exe";
     }
     else
     {
@@ -64,6 +68,7 @@ int main()
     if (wordle)
     {
         installed_games[3] = "wordle";
+        game_exec[3] = "lua ./wordle/main.lua";
     }
     else
     {
@@ -72,6 +77,7 @@ int main()
     if (platformer)
     {
         installed_games[4] = "Platformer2000";
+        game_exec[4] = "start ./Platformer2000/Hello-Unity_Win64.exe";
     }
     else
     {
@@ -115,34 +121,15 @@ int main()
                 int game_choice;
                 cin >> game_choice;
 
-                if (game_choice == 1 && installed_games[0] != "")
+                try
                 {
-                    string version;
-                    ifstream version_txt("SnakeGame/version.txt");
-                    getline(version_txt, version);
-                    cout << "Launching " << version << endl;
-                    system("python ./SnakeGame/turtlesnake.py");
+                system(game_exec[game_choice - 1].c_str());
                 }
-                else if (game_choice == 2 && installed_games[1] != "")
-                {
-                    system("python ./DodgerGame/dodger.py");
-                }
-                else if (game_choice == 3 && installed_games[2] != "")
-                {
-                    system("start TicTacToe/TicTacToe-vs-AI.exe");
-                }
-                else if (game_choice == 4 && installed_games[3] != "")
-                {
-                    system("lua ./wordle/main.lua");
-                }
-                else if (game_choice == 5 && installed_games[4] != "")
-                {
-                    system("start Platformer2000/Hello-Unity.exe");
-                }
-                else
+                catch (...)
                 {
                     cout << "Invalid game choice" << endl;
                 }
+                
             }
             break;
         case 2:
@@ -311,6 +298,7 @@ int main()
             if (snake)
             {
                 installed_games[0] = "SnakeGame";
+                game_exec[0] = "python ./SnakeGame/turtlesnake.py";
             }
             else
             {
@@ -319,6 +307,7 @@ int main()
             if (dodger)
             {
                 installed_games[1] = "DodgerGame";
+                game_exec[1] = "python ./DodgerGame/dodger.py";
             }
             else
             {
@@ -327,6 +316,7 @@ int main()
             if (tictactoe)
             {
                 installed_games[2] = "TicTacToe";
+                game_exec[2] = "start ./TicTacToe/TicTacToe-vs-AI.exe";
             }
             else
             {
@@ -334,7 +324,8 @@ int main()
             }
             if (wordle)
             {
-                installed_games[3] = "Wordle";
+                installed_games[3] = "wordle";
+                game_exec[3] = "lua ./wordle/main.lua";
             }
             else
             {
@@ -343,6 +334,7 @@ int main()
             if (platformer)
             {
                 installed_games[4] = "Platformer2000";
+                game_exec[4] = "start ./Platformer2000/Hello-Unity_Win64.exe";
             }
             else
             {
