@@ -6,7 +6,7 @@
 #include <chrono>
 #include <thread>
 
-
+// detecting system type
 #ifdef __APPLE__
     bool macos = true;
 #endif
