@@ -42,6 +42,10 @@ int main()
 {
     using namespace std::this_thread; // sleep_for, sleep_until
     using namespace std::chrono;      // nanoseconds, system_clock, seconds
+
+    auto path = std::filesystem::current_path(); //getting path
+    current_path(path); //setting path
+
     cout << "Retro Games Client v1.4.0";
     if (macos)
     {
