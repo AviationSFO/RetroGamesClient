@@ -6,6 +6,21 @@
 #include <chrono>
 #include <thread>
 
+
+#ifdef __APPLE__
+    bool macos = true;
+#endif
+
+#ifdef __WIN64__
+    bool macos = false;
+#endif
+
+#ifdef __WIN32__
+    bool macos = false;
+#endif
+
+
+
 using namespace std;
 using filesystem::current_path;
 using filesystem::directory_iterator;
@@ -27,7 +42,16 @@ int main()
 {
     using namespace std::this_thread; // sleep_for, sleep_until
     using namespace std::chrono;      // nanoseconds, system_clock, seconds
-    cout << "Retro Games Client v1.3.1" << endl;
+    cout << "Retro Games Client v1.4.0";
+    if (macos)
+    {
+        cout << " - MacOS" << endl;
+    }
+    else
+    {
+        cout << " - Windows" << endl;
+    }
+
     // get list of installed games
     string installed_games[5];
     string game_exec[5];
@@ -140,7 +164,7 @@ int main()
                  << "4 - " << installed_games[3] << endl
                  << "5 - " << installed_games[4] << endl;
             cout << "Enter game to install: ";
-            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe\n4 - Wordle\n5 - Platformer 2000" << endl;
+            cout << "\n1 - SnakeGame\n2 - DodgerGame\n3 - TicTacToe\n4 - Wordle\n5 - Platformer 2000 (Windows Only)" << endl;
             int slot_choice;
             cin >> slot_choice;
             if (slot_choice == 1)
@@ -201,9 +225,16 @@ int main()
             }
             else if (slot_choice == 5)
             {
-                if (installed_games[4] == "")
+                if (!macos)
                 {
-                    system("powershell -ExecutionPolicy Bypass -F installP2K.ps1");
+                    if (installed_games[4] == "")
+                    {
+                        system("powershell -ExecutionPolicy Bypass -F installP2K.ps1");
+                    }
+                }
+                else
+                {
+                    cout << "Platformer 2000 is not supported on MacOS" << endl;
                 }
             }
             else
